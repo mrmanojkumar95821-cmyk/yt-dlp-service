@@ -9,16 +9,19 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy requirements
-COPY requirements.txt .
+COPY requirements.txt requirements.txt
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application
-COPY app.py .
+COPY . .
 
-# Expose port
-EXPOSE 10000
+# Render automatically sets PORT → don't hardcode
+EXPOSE 5000
 
-# Run with gunicorn
-CMD gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 app:app
+# Set default port for local debugging (Render overrides)
+ENV PORT=5000
+
+# Run app using gunicorn
+CMD gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
