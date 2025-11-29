@@ -26,7 +26,7 @@ def download():
         import yt_dlp
 
         ydl_opts = {
-            'format': 'best[ext=mp4]/best',
+            'format': 'best',  # Simplest - works with ALL videos
             'quiet': True,
             'no_warnings': True,
             'extract_flat': False,
